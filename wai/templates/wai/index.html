@@ -1,0 +1,25 @@
+{% extends "wai/base_site.html" %}
+
+{% block bodyclass %}dashboard{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="/view">WAI</a> 
+</div>
+<ul class="messagelist"><li>Select a view to continue</li></ul>
+{% endblock %}
+
+{% block coltype %}flex{% endblock %}
+
+{% block content %}
+<div id="content-main">
+   <h1>Welcome !</h1>
+   <h2><a href="schedule/">Consult the schedules</a></h2>
+   <h2><a href="group/">See the list of presenters per groups</a></h2>
+   <h2><a href="presenter/">Look for a particular presenter</a></h2>
+   <h2><a href="presentation/">Look for a particular presentation</a></h2>
+</div>
+{% endblock %}
+

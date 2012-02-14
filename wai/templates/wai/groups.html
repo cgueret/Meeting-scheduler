@@ -1,0 +1,35 @@
+{% extends "wai/base_site.html" %}
+
+{% block bodyclass %}dashboard{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="../">WAI</a> 
+&rsaquo;
+Groups
+</div>
+<ul class="messagelist"><li>Click on a group to get a detailled view</li></ul>
+{% endblock %}
+
+{% block coltype %}flex{% endblock %}
+
+{% block content %}
+<div id="content-main">
+	<div class="module">
+		<h2>List of all groups</h2>
+		<table style="width:100%;">
+			<thead><tr><th>Name</th><th>Number of members</th></tr></thead>
+			<tbody>
+				{% for group in group_list %}
+				<tr class="{% cycle 'row1' 'row2' %}">
+					<td><a href="{{group.id}}/">{{ group.name }}</a></td>
+					<td>{{ group.members_count}}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	</div>
+{% endblock %}

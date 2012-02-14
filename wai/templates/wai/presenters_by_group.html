@@ -1,0 +1,38 @@
+{% extends "wai/base_site.html" %}
+
+{% block bodyclass %}dashboard{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="../../">WAI</a> 
+&rsaquo;
+<a href="../">Presenters</a> 
+&rsaquo;
+{{ group_name|capfirst|escape }}
+</div>
+<ul class="messagelist"><li>Click on a name to get a detailled view</li></ul>
+{% endblock %}
+
+{% block coltype %}flex{% endblock %}
+
+{% block content %}
+<div id="content-main">
+	<div class="module">
+		<h2>List of all presenters</h2>
+		<table style="width:100%;">
+			<thead><tr><th>Name</th><th>Group</th></tr></thead>
+			<tbody>
+				{% for presenter in presenter_list %}
+				<tr class="{% cycle 'row1' 'row2' %}">
+					<!--<th><a href="../../meeting/{{meeting.date}}">{{ meeting.date|date:"d F Y" }}</a></th>-->
+					<td><a href="{{presenter.id}}/">{{ presenter.name }}</a></td>
+					<td>{{ presenter.group.name}}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	</div>
+{% endblock %}

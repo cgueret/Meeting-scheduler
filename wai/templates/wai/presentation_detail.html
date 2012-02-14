@@ -1,0 +1,57 @@
+{% extends "wai/base_site.html" %}
+
+{% block bodyclass %}dashboard{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="../../">WAI</a> 
+&rsaquo;
+<a href="../">Presentations</a> 
+&rsaquo;
+{{ presentation|capfirst|escape }}
+</div>
+{% endblock %}
+
+{% block coltype %}flex{% endblock %}
+
+{% block content %}
+<div id="content-main">
+	<div class="module">
+		<h2>Description</h2>
+		<table style="width:100%;">
+			<tbody>
+				<tr>
+					<td><b>Title</b></td>
+					<td>{{ presentation.title}}</td>
+				</tr>
+				<tr>
+					<td><b>Abstract</b></td>
+					<td>{{ presentation.abstract}}</td>
+				</tr>
+				{% if presentation.slides  %}
+				<tr>
+					<td><b>Slides</b></td>
+					<td><a href="../../../../media/{{presentation.slides}}">Click on that link to get the slides</a></td>
+				</tr>
+				{% endif %}
+			</tbody>
+		</table>
+	</div>
+	<div class="module">
+		<h2>Other presentations by {{presentation.presenter.name}}</h2>
+		<table style="width:100%;">
+			<thead><tr><th>Date</th><th>Title</th></tr></thead>
+			<tbody>
+				{% for presentation in presentation_list %}
+				<tr>
+					<td>{{ presentation.meeting.date|date:"d F Y" }}</td>
+					<td><a href="../{{presentation.id}}">{{ presentation.title }}</a> </td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}

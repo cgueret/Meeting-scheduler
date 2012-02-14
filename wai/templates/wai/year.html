@@ -1,0 +1,37 @@
+{% extends "wai/base_site.html" %}
+
+{% block bodyclass %}dashboard{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="../../">WAI</a> 
+&rsaquo;
+<a href="../">Schedule</a> 
+&rsaquo; {{ year|capfirst|escape }}
+</div>
+{% endblock %}
+
+{% block coltype %}flex{% endblock %}
+
+{% block content %}
+<div id="content-main">
+	<h1>Year</h1>
+	<div class="module">
+		<table>
+			<thead><tr><th>Date</th><th>Presenters</th><th>Room</th></tr></thead>
+			<tbody>
+				{{ meetings_list }}
+				{% for (month,presenters) in enumerate( meetings_list ) %}
+				<tr class="{% cycle 'row1' 'row2' %}">
+					<!--<th><a href="../../meeting/{{meeting.date}}">{{ meeting.date|date:"d F Y" }}</a></th>-->
+					<td>{{ presenters }}</td>
+					<td>{{ month }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	</div>
+{% endblock %}

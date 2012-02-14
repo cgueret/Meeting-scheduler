@@ -1,0 +1,107 @@
+{% extends "wai/base_site.html" %}
+
+{% block bodyclass %}dashboard{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="../../">WAI</a> 
+&rsaquo;
+<a href="../">Schedule</a> 
+&rsaquo; {{ year|capfirst|escape }}
+</div>
+{% endblock %}
+
+{% block coltype %}flex{% endblock %}
+
+{% block content %}
+<h1>Select a meeting for more information</h1>
+<div id="content-main">
+	<div class="module">
+		<h2>Meetings for {{year}}</h2>
+		<table style="width:100%;">
+			<thead>
+				<tr>
+					<th>Date</th>
+					<th>First presenter</th>
+					<th>Second presenter</th>
+					<th>Room</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for meeting in meetings_list %}
+				<tr class="{% cycle 'row1' 'row2' %}">
+					<td>
+						<a href="../../schedule/{{meeting.date|date:"Y/m/d"}}">{{ meeting.date|date:"d F" }}</a>
+					</td>
+					{% ifequal meeting.presentation_set.count 0 %}
+						<td colspan="2">No presentations</td>
+					{% endifequal %}
+					{% ifequal meeting.presentation_set.count 1 %}
+						{% for presentation in meeting.presentation_set.all %}
+							<td colspan="2">
+							<a href="../../presentation/{{presentation.id}}" title="{{presentation.presenter.group.name}}">{{ presentation.presenter.name }}</a>
+							</td>
+						{% endfor %}
+					{% endifequal %}
+					{% ifequal meeting.presentation_set.count 2 %}
+						{% for presentation in meeting.presentation_set.all %}
+							<td>
+							<a href="../../presentation/{{presentation.id}}" title="{{presentation.presenter.group.name}}">{{ presentation.presenter.name }}</a>
+							</td>
+						{% endfor %}
+					{% endifequal %}
+					<td>{{ meeting.location }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+<div id="content-related">
+	<div class="module">
+	<h2>Related links</h2>
+	<h3>Other format</h3>
+	<ul class="actionlist">
+		<li class="addlink" style="list-style-type:none;">
+			<a href="../../ical/schedule.ics">ICal export</a><br/>
+			<span class="mini quiet">get an ICalendar version of the schedule</span>
+		</li>
+	</ul>
+	<h3>Other content</h3>
+	<ul class="actionlist">
+		<li class="addlink" style="list-style-type:none;">
+			<a href="../../schedule">Previous schedules</a><br/>
+			<span class="mini quiet">see the schedules back to 2006</span>
+		</li>
+		<li class="addlink" style="list-style-type:none;">
+			<a href="../../group">List of groups</a><br/>
+			<span class="mini quiet">see the speakers sorted by group</span>
+		</li>
+	</ul>
+	</div>
+	<div class="module">
+	<h2>Reserve list</h2>
+		<table style="width:100%;">
+			<thead>
+				<tr>
+					<th>Presenter name and group</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for item in reserve_list %}
+				<tr class="{% cycle 'row1' 'row2' %}">
+					<td>
+					<a href="../../presenter/{{item.presenter.id}}">{{ item.presenter }}</a>
+					<br/>
+					<span class="mini quiet">{{item.presenter.group.name}}</span>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+			</table>
+			
+	</div>
+</div>
+{% endblock %}

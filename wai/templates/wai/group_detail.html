@@ -1,0 +1,44 @@
+{% extends "wai/base_site.html" %}
+
+{% block bodyclass %}dashboard{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="../../">WAI</a> 
+&rsaquo;
+<a href="../">Group</a> 
+&rsaquo;
+{{ group_name|capfirst|escape }}
+</div>
+<ul class="messagelist"><li>Click on a name to get a detailled view about the presenter</li></ul>
+{% endblock %}
+
+{% block coltype %}flex{% endblock %}
+
+{% block content %}
+<div id="content-main">
+	<div class="module">
+		<h2>List of all presenters form the group {{group_name|capfirst|escape}}</h2>
+		<table style="width:100%;">
+			<thead><tr><th>Name</th><th>E-Mail</th><th>Available</th></tr></thead>
+			<tbody>
+				{% for presenter in presenter_list %}
+				<tr class="{% cycle 'row1' 'row2' %}">
+					<td><a href="../../presenter/{{presenter.id}}/">{{ presenter.name }}</a></td>
+					<td>{{ presenter.email }}</td>
+					<td>
+					{% if presenter.available %}
+					<img src="/media/img/admin/icon-yes.gif" alt="True" />
+					{% else %}
+					<img src="/media/img/admin/icon-no.gif" alt="False" />
+					{% endif %}
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	</div>
+{% endblock %}

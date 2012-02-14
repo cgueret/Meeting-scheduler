@@ -1,0 +1,23 @@
+Dear {{ names }}
+
+Your presentation is scheduled for {{ date }} at 11am.
+Please send me the title and the abstract of your talk as soon as possible, not later than coming Wednesday, so I can send the announcement to the list.
+
+Please note, that :
+- In case of cancellation your group (leader) has to assign a new presenter for the empty slot
+- In order to ease the interaction with the audience, you should announce the purpose of your talk before you start. Some examples :
+* Ask for feedback on an on-going project,
+* Discuss a new idea,
+* Have a general discussion
+- In any case, the presentation must not be no longer than 30 minutes.
+If you want to answer to some questions during the talk, be sure to manage your time accordingly.
+I will chair the session and indicate the beginning of the last 5 minutes relative to the half an hour.
+
+It is also important to note that :
+- A beamer will be available on the spot but you need to bring your own laptop. Please be present 5 minutes before starting, so we can get everything connected and tested.
+- The time slot is fairly short. Please do not prepare too many slides (10-15 is probably about right depending on your style)
+- The point of the WAI is to let your colleagues know what you're doing, not to give an in-depth lecture about certain algorithms or theories. Keep your presentation limited to things that are relevant to understand the main point of your talk, and accessible to the general AI public.
+- The presenter is responsible to timing his/her presentation and for managing discussions. Feel free to cut people short if their questions are irrelevant or if you do not have time to answer them. It's your show, and I am only responsible for stopping it after 30 minutes.
+
+Cheers,
+Christophe

@@ -1,0 +1,35 @@
+{% extends "wai/base_site.html" %}
+
+{% block bodyclass %}dashboard{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="../">WAI</a> 
+&rsaquo;
+Presentations
+</div>
+{% endblock %}
+
+{% block coltype %}flex{% endblock %}
+
+{% block content %}
+<div id="content-main">
+	<div class="module">
+		<h2>Description</h2>
+		<table style="width:100%;">
+			<thead><tr><th>Date</th><th>Presenter</th><th>Title</th></tr></thead>
+			<tbody>
+				{% for presentation in presentation_list %}
+				<tr>
+					<td>{{ presentation.meeting.date|date:"d F Y"}}</td>
+					<td><a href="../presenter/{{presentation.presenter.id}}">{{ presentation.presenter.name}}</a></td>
+					<td><a href="../presentation/{{presentation.id}}">{{ presentation.title}}</a></td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}

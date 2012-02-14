@@ -1,0 +1,26 @@
+{% extends "wai/base_site.html" %}
+
+{% block bodyclass %}dashboard{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+<div id="content-main">
+	<h1>Month Year</h1>
+	<div class="module">
+		<table>
+			<thead><tr><th>Date</th><th>Presenters</th></tr></thead>
+			<tbody>
+				{% for meeting in meetings_list %}
+				<tr class="{% cycle 'row1' 'row2' %}">
+					<td>{{ meeting.date|date:"d F Y" }}</td>
+					<td>{{ meeting.presenters }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	</div>
+{% endblock %}

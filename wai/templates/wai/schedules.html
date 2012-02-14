@@ -1,0 +1,36 @@
+{% extends "wai/base_site.html" %}
+
+{% block bodyclass %}dashboard{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="../">WAI</a> 
+&rsaquo;
+Schedules
+</div>
+<!--<ul class="messagelist"><li>Click on a year to get a detailled view</li></ul>-->
+{% endblock %}
+
+{% block coltype %}flex{% endblock %}
+
+{% block content %}
+<div id="content-main">
+	<h1>Click on a year to get a detailled view</h1>
+	<div class="module">
+		<h2>List of all years</h2>
+		<table style="width:100%;">
+			<thead><tr><th>Year</th><th>Number of presentations</th></tr></thead>
+			<tbody>
+				{% for year,count in years_list.items %}
+				<tr class="{% cycle 'row1' 'row2' %}">
+					<td><a href="{{year}}/">{{ year }}</a></td>
+					<td>{{ count }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}
