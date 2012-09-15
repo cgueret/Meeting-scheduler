@@ -237,10 +237,10 @@ def send_request(request):
 			# Process the data in form.cleaned_data
 			subject = form.cleaned_data['subject']
 			message = form.cleaned_data['message']
-			sender = 'c.d.m.gueret@vu.nl'
+			sender = 'laurens.rietveld@vu.nl'
 
 			meeting = get_object_or_404(Meeting, date=form.cleaned_data['identifier'])
-			recipients = ['c.d.m.gueret@vu.nl']
+			recipients = ['laurens.rietveld@vu.nl']
 			for pres in meeting.presentation_set.all():
 				recipients.append(pres.presenter.email)
 				
