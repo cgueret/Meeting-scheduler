@@ -266,7 +266,7 @@ def send_request(request):
 		message += "\n\n"
 
 		message += "Please note, that :\n"
-		message += "- In case of cancellation your group (leader) has to assign a new presenter for the empty slot\n"
+		message += "- In case of cancellation, go to http://wai.few.vu.nl and select someone in the following to switch with\n"
 		message += "- In order to ease the interaction with the audience, you should announce the purpose of your talk before you start. Some examples :\n"
 		message += "* Rehearse a presentation for a conference,\n"
 		message += "* Ask for feedback on an on-going project,\n"
