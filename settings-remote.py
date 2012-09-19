@@ -89,3 +89,7 @@ EMAIL_HOST_USER="CHANGE_ME"
 EMAIL_HOST_PASSWORD="CHANGE_ME"
 EMAIL_PORT=587
 EMAIL_USE_TLS=True
+EMAIL_SENDER = "laurens.rietveld@vu.nl"
+EMAIL_ANOUNCEMENT_RECIPIENTS = ['wai-l@cs.vu.nl', 'laurens.rietveld@vu.nl']
+EMAIL_REQUEST_ABSTRACT_CC = ['laurens.rietveld@vu.nl']
+EMAIL_FOOTER = "Best, Laurens and Chris"

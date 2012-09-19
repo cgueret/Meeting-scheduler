@@ -7,13 +7,13 @@ from django.template import RequestContext
 from django.core.mail import EmailMultiAlternatives
 from django.utils.encoding import iri_to_uri
 from django.utils.http import urlquote_plus
+from django.conf import settings
 import pytz
 import vobject
 import operator
 
 def index(request):
 	year = datetime.now().year
-	
 	return HttpResponseRedirect("/page/schedule/%s" % year)
 	
 #	# Get all meetings
@@ -199,11 +199,9 @@ def send_announce(request):
 			# Process the data in form.cleaned_data
 			subject = form.cleaned_data['subject']
 			message = form.cleaned_data['message']
-			sender = 'laurens.rietveld@vu.nl'
-
-			recipients = ['wai-l@cs.vu.nl', 'laurens.rietveld@vu.nl']
+			
 			from django.core.mail import send_mail
-			send_mail(subject, message, sender, recipients)
+			send_mail(subject, message, settings.EMAIL_SENDER, settings.EMAIL_ANOUNCEMENT_RECIPIENTS)
 			
 			return HttpResponseRedirect("/page/schedule") # Redirect after POST
 	else:
@@ -215,6 +213,9 @@ def send_announce(request):
 		
 		for pres in meeting.presentation_set.all():
 			message += "%s : %s\n%s\n\n" % (pres.presenter.name, pres.title, pres.abstract)
+		
+		message += "\n\n";
+		message += settings.EMAIL_FOOTER
 		
 		default = {
 			'subject' : subject,
@@ -241,15 +242,14 @@ def send_request(request):
 			# Process the data in form.cleaned_data
 			subject = form.cleaned_data['subject']
 			message = form.cleaned_data['message']
-			sender = 'laurens.rietveld@vu.nl'
 
 			meeting = get_object_or_404(Meeting, date=form.cleaned_data['identifier'])
-			recipients = ['laurens.rietveld@vu.nl']
+			recipients = settings.EMAIL_REQUEST_ABSTRACT_CC
 			for pres in meeting.presentation_set.all():
 				recipients.append(pres.presenter.email)
 				
 			from django.core.mail import send_mail
-			send_mail(subject, message, sender, recipients)
+			send_mail(subject, message, settings.EMAIL_SENDER, recipients)
 			
 			return HttpResponseRedirect("/page/schedule") # Redirect after POST
 	else:
@@ -265,12 +265,12 @@ def send_request(request):
 		message += "\n\n"
 			
 		message += "Your presentation is scheduled for %s at 11am.\n" % meeting.date.strftime("%d %B %Y")
-		message += "Please send me the title and the abstract of your talk as soon as possible, not later than coming Wednesday, so I can send the announcement to the list.\n"
+		message += "Please send us the title and the abstract of your talk as soon as possible, not later than coming Wednesday, so we can send the announcement to the list.\n"
 
 		message += "\n\n"
 
 		message += "Please note, that :\n"
-		message += "- In case of cancellation, go to http://wai.few.vu.nl and select someone in the following to switch with. Let me know when you have done so.\n"
+		message += "- In case of cancellation, go to http://wai.few.vu.nl and find someone from the top of the reserve list to fill your slot. Let us know when you have done so.\n"
 		message += "- In order to ease the interaction with the audience, you should announce the purpose of your talk before you start. Some examples :\n"
 		message += "* Rehearse a presentation for a conference,\n"
 		message += "* Ask for feedback on an on-going project,\n"
@@ -278,7 +278,7 @@ def send_request(request):
 		message += "* Have a general discussion\n"
 		message += "- In any case, the presentation must not be no longer than 30 minutes.\n"
 		message += "If you want to answer to some questions during the talk, be sure to manage your time accordingly.\n"
-		message += "I will chair the session and indicate the beginning of the last 5 minutes relative to the half an hour.\n"
+		message += "We will chair the session and indicate the beginning of the last 5 minutes relative to the half an hour.\n"
 
 		message += "\n"
 
@@ -286,8 +286,9 @@ def send_request(request):
 		message += "- A beamer will be available on the spot but you need to bring your own laptop. Please be present 5 minutes before starting, so we can get everything connected and tested.\n"
 		message += "- The time slot is fairly short. Please do not prepare too many slides (10-15 is probably about right depending on your style)\n"
 		message += "- The point of the WAI is to let your colleagues know what you're doing, not to give an in-depth lecture about certain algorithms or theories. Keep your presentation limited to things that are relevant to understand the main point of your talk, and accessible to the general AI public.\n"
-		message += "- The presenter is responsible to timing his/her presentation and for managing discussions. Feel free to cut people short if their questions are irrelevant or if you do not have time to answer them. It's your show, and I am only responsible for stopping it after 30 minutes.\n"
-
+		message += "- The presenter is responsible to timing his/her presentation and for managing discussions. Feel free to cut people short if their questions are irrelevant or if you do not have time to answer them. It's your show, and we are only responsible for stopping it after 30 minutes.\n"
+		message += "\n"
+		message += settings.EMAIL_FOOTER
 		default = {
 			'subject' : subject,
 			'message' : message,

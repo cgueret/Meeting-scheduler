@@ -57,7 +57,6 @@
 	{% if user.is_authenticated and user.is_staff %}
 	<div class="module">
 	<h2>Actions</h2>
-	<h3>Send mails</h3>
 	<ul class="actionlist">
 		<li class="addlink" style="list-style-type:none;">
 			<a href="../../../../mailing/send_request?id={{meeting.date}}">Request abstracts</a><br/>
@@ -67,16 +66,13 @@
 			<a href="../../../../mailing/send_announce?id={{meeting.date}}">Announce meeting</a><br/>
 			<span class="mini quiet">announce the content of the next meeting</span>
 		</li>
+		<li class="changelink" style="list-style-type:none;">
+			<a href="../../../../../admin/scheduler/meeting/{{meeting.date|date:'Y'}}-{{meeting.date|date:'m'}}-{{meeting.date|date:'d'}}">Edit meeting</a><br/>
+			<span class="mini quiet">change or add meeting details (abstract/title/slides)</span>
+		</li>
 	</ul>
+	
 	</div>
 	{% endif %}
-	<div class="module">
-	<h2>Social networking</h2>
-	<h3>Click on the like button to like this page on Facebook</h3>
-	<br/>
-	<p>
-	<iframe src="http://www.facebook.com/plugins/like.php?href={{url2}}&amp;layout=standard&amp;show_faces=true&amp;width=150&amp;action=like&amp;colorscheme=evil" scrolling="no" frameborder="0" allowTransparency="true" style="border:none; overflow:hidden; width:100%; height:px"></iframe>
-	</p>
-	</div>
 </div>
 {% endblock %}
