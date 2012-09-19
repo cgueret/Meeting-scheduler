@@ -123,6 +123,10 @@ def schedules(request):
 
 def schedule_year(request, year):
 	meetings_list = Meeting.objects.filter(date__year=year).order_by('date')
+	for meeting in meetings_list:
+		if meeting.days_offset() >= 0:
+			meeting.nextMeeting = True
+			break
 	presenters = Presenter.objects.filter(available=True)
 	presenter_list = list()
 	for presenter in presenters:

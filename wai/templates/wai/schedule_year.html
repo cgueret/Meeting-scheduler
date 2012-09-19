@@ -31,7 +31,7 @@
 			</thead>
 			<tbody>
 				{% for meeting in meetings_list %}
-				<tr class="{% cycle 'row1' 'row2' %}">
+				<tr class="{% cycle 'row1' 'row2' %}" {% if meeting.nextMeeting %}style="background: #FFEB00;"{% endif %}>
 					<td>
 						<a href="../../schedule/{{meeting.date|date:"Y/m/d"}}">{{ meeting.date|date:"d F" }}</a>
 					</td>

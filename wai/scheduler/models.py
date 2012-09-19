@@ -50,6 +50,10 @@ class Meeting(models.Model):
 	date = models.DateField('Meeting date',primary_key=True)
 	location = models.ForeignKey(Room)
 	
+	def days_offset(self):
+		datediff = self.date - datetime.date.today()
+		return datediff.days
+	
 	def __unicode__(self):
 		return self.date.strftime("%d %B %Y")
 		
