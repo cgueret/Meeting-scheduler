@@ -11,6 +11,13 @@ from django.conf import settings
 import pytz
 import vobject
 import operator
+import logging
+
+logging.basicConfig(
+    level = logging.WARN,
+    format = '%(asctime)s %(levelname)s %(message)s',
+    filename = '/tmp/djangoLog.log',)
+
 
 def index(request):
 	year = datetime.now().year

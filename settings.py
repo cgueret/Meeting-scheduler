@@ -89,6 +89,6 @@ LOGIN_REDIRECT_URL="/page"
 EMAIL_HOST="smtp.few.vu.nl"
 
 EMAIL_SENDER = "laurens.rietveld@vu.nl"
-EMAIL_ANOUNCEMENT_RECIPIENTS = ['wai-l@cs.vu.nl', 'laurens.rietveld@vu.nl']
+EMAIL_ANOUNCEMENT_RECIPIENTS = ['wai-meetings@few.vu.nl', 'laurens.rietveld@vu.nl']
 EMAIL_REQUEST_ABSTRACT_CC = ['laurens.rietveld@vu.nl']
 EMAIL_FOOTER = "Best, Laurens and Chris"
