@@ -1,4 +1,5 @@
 # Django settings for wai project.
+from emailsettings import *
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
@@ -46,6 +47,8 @@ MEDIA_URL = 'http://wai.few.vu.nl/media'
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
 ADMIN_MEDIA_PREFIX = '/media/'
+
+LOGGING_FILE="/tmp/djangoLog.log"
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'c1+ccd$)v4pbg8gotcg=+kn_#j!ayzjr*1)u3%-jy@+fg1f5f%'

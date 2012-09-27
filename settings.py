@@ -1,4 +1,5 @@
 # Django settings for wai project.
+from emailsettings import *
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -47,6 +48,9 @@ MEDIA_URL = 'http://wai.few.vu.nl/media'
 # Examples: "http://foo.com/media/", "/media/".
 ADMIN_MEDIA_PREFIX = '/media/'
 
+
+LOGGING_FILE="/home/lrd900/code/meeting-scheduler/djangoLog.log"
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'c1+ccd$)v4pbg8gotcg=+kn_#j!ayzjr*1)u3%-jy@+fg1f5f%'
 
@@ -86,9 +90,3 @@ INSTALLED_APPS = (
 
 LOGIN_REDIRECT_URL="/page"
 
-EMAIL_HOST="smtp.few.vu.nl"
-
-EMAIL_SENDER = "laurens.rietveld@vu.nl"
-EMAIL_ANOUNCEMENT_RECIPIENTS = ['wai-meetings@few.vu.nl', 'laurens.rietveld@vu.nl']
-EMAIL_REQUEST_ABSTRACT_CC = ['laurens.rietveld@vu.nl']
-EMAIL_FOOTER = "Best, Laurens and Chris"

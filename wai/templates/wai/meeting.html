@@ -59,11 +59,11 @@
 	<h2>Actions</h2>
 	<ul class="actionlist">
 		<li class="addlink" style="list-style-type:none;">
-			<a href="../../../../mailing/send_request?id={{meeting.date}}">Request abstracts</a><br/>
+			<a href="../../../../mailing/send_request?id={{meeting.date|date:'Y'}}-{{meeting.date|date:'m'}}-{{meeting.date|date:'d'}}">Request abstracts</a><br/>
 			<span class="mini quiet">ask presenters to send their abstracts</span>
 		</li>
 		<li class="addlink" style="list-style-type:none;">
-			<a href="../../../../mailing/send_announce?id={{meeting.date}}">Announce meeting</a><br/>
+			<a href="../../../../mailing/send_announce?id={{meeting.date|date:'Y'}}-{{meeting.date|date:'m'}}-{{meeting.date|date:'d'}}">Announce meeting</a><br/>
 			<span class="mini quiet">announce the content of the next meeting</span>
 		</li>
 		<li class="changelink" style="list-style-type:none;">
