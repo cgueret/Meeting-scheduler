@@ -80,12 +80,12 @@ class LoginForm(forms.Form):
 	password = forms.CharField(widget=forms.PasswordInput(render_value=False),max_length=100)
 	
 class SendAnnounceForm(forms.Form):
-	subject = forms.CharField(max_length=200,widget=forms.TextInput)
-	message = forms.CharField(widget=forms.Textarea)
+	subject = forms.CharField(max_length=200,widget=forms.HiddenInput)
+	message = forms.CharField(widget=forms.HiddenInput)
 
 class SendRequestForm(forms.Form):
-	subject 	= forms.CharField(max_length=200,widget=forms.TextInput)
-	message 	= forms.CharField(widget=forms.Textarea)
+	subject 	= forms.CharField(max_length=200,widget=forms.HiddenInput)
+	message 	= forms.CharField(widget=forms.HiddenInput)
 	identifier	= forms.DateField(widget=forms.HiddenInput)
 	
 #def presentation_save_handler(sender, **kwargs):

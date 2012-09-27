@@ -20,288 +20,243 @@ logging.basicConfig(
 
 
 def index(request):
-	year = datetime.now().year
-	return HttpResponseRedirect("/page/schedule/%s" % year)
-	
-#	# Get all meetings
-#	meetings_list = Meeting.objects.filter(date__lte=datetime.now()).order_by('-date')
-	
-	# Call the template
-#	context = {
-#		'meetings_list' : meetings_list,
-#	}
-#	return render_to_response('wai/index.html', context, context_instance=RequestContext(request))
+    year = datetime.now().year
+    return HttpResponseRedirect("/page/schedule/%s" % year)
+    
+#    # Get all meetings
+#    meetings_list = Meeting.objects.filter(date__lte=datetime.now()).order_by('-date')
+    
+    # Call the template
+#    context = {
+#        'meetings_list' : meetings_list,
+#    }
+#    return render_to_response('wai/index.html', context, context_instance=RequestContext(request))
 
 def presentations(request):
-	# Get the list of all presentations
-	presentation_list = Presentation.objects.order_by('-meeting__date')
+    # Get the list of all presentations
+    presentation_list = Presentation.objects.order_by('-meeting__date')
 
-	# Set the context
-	context = {
-		'presentation_list' : presentation_list
-	}
+    # Set the context
+    context = {
+        'presentation_list' : presentation_list
+    }
 
-	return render_to_response('wai/presentations.html', context, context_instance=RequestContext(request))
-	
+    return render_to_response('wai/presentations.html', context, context_instance=RequestContext(request))
+    
 def presentation_detail(request, presentation_id):
-	# Get this presentation
-	presentation = get_object_or_404(Presentation, id=presentation_id)
-	
-	# Get the list of all presentations by the same presenter
-	presentation_list = get_list_or_404(Presentation, presenter=presentation.presenter)
+    # Get this presentation
+    presentation = get_object_or_404(Presentation, id=presentation_id)
+    
+    # Get the list of all presentations by the same presenter
+    presentation_list = get_list_or_404(Presentation, presenter=presentation.presenter)
 
-	# Set the context
-	context = {
-		'presentation' : presentation,
-		'presentation_list' : presentation_list
-	}
-	
-	return render_to_response('wai/presentation_detail.html', context, context_instance=RequestContext(request))
+    # Set the context
+    context = {
+        'presentation' : presentation,
+        'presentation_list' : presentation_list
+    }
+    
+    return render_to_response('wai/presentation_detail.html', context, context_instance=RequestContext(request))
 
 
 def meeting(request, year, month, day):
-	# Get this presentation
-	dates = datetime(int(year), int(month), int(day))
-	meeting = get_object_or_404(Meeting, date=dates)
-	
-	# Set the context
-	context = {
-		'date' : dates,
-		'meeting' : meeting,
-		'url' : request.build_absolute_uri(),
-		'url2' : urlquote_plus(request.build_absolute_uri())
-	}
-	
-	return render_to_response('wai/meeting.html', context, context_instance=RequestContext(request))
+    # Get this presentation
+    dates = datetime(int(year), int(month), int(day))
+    meeting = get_object_or_404(Meeting, date=dates)
+    
+    # Set the context
+    context = {
+        'date' : dates,
+        'meeting' : meeting,
+        'url' : request.build_absolute_uri(),
+        'url2' : urlquote_plus(request.build_absolute_uri())
+    }
+    
+    return render_to_response('wai/meeting.html', context, context_instance=RequestContext(request))
 
 def groups(request):
-	group_list = Group.objects.order_by('name')
-	context = {
-		'group_list' : group_list
-	}
-	return render_to_response('wai/groups.html', context, context_instance=RequestContext(request))
-	
+    group_list = Group.objects.order_by('name')
+    context = {
+        'group_list' : group_list
+    }
+    return render_to_response('wai/groups.html', context, context_instance=RequestContext(request))
+    
 def group_detail(request, group_id):
-	presenter_list = get_list_or_404(Presenter, group=group_id)
-	context = {
-		'presenter_list' : presenter_list,
-		'group_name' : Group.objects.get(id=group_id).name
-	}
-	return render_to_response('wai/group_detail.html', context, context_instance=RequestContext(request))
+    presenter_list = get_list_or_404(Presenter, group=group_id)
+    context = {
+        'presenter_list' : presenter_list,
+        'group_name' : Group.objects.get(id=group_id).name
+    }
+    return render_to_response('wai/group_detail.html', context, context_instance=RequestContext(request))
 
 
 def presenters(request):
-	group_list = Group.objects.order_by('name')
-	presenter_list = Presenter.objects.order_by('name')
-	context = {
-		'group_list' : group_list,
-		'presenter_list' : presenter_list,
-	}
-	return render_to_response('wai/presenters.html', context, context_instance=RequestContext(request))
-	
-	
+    group_list = Group.objects.order_by('name')
+    presenter_list = Presenter.objects.order_by('name')
+    context = {
+        'group_list' : group_list,
+        'presenter_list' : presenter_list,
+    }
+    return render_to_response('wai/presenters.html', context, context_instance=RequestContext(request))
+    
+    
 def presenter_detail(request, presenter_id):
-	presenter = get_object_or_404(Presenter, id=presenter_id)
-	presentation_list = presenter.presentation_set.all()
+    presenter = get_object_or_404(Presenter, id=presenter_id)
+    presentation_list = presenter.presentation_set.all()
 
-	context = {
-		'presenter' : presenter,
-		'presentation_list' : presentation_list
-	}
+    context = {
+        'presenter' : presenter,
+        'presentation_list' : presentation_list
+    }
 
-	return render_to_response('wai/presenter_detail.html', context, context_instance=RequestContext(request))
+    return render_to_response('wai/presenter_detail.html', context, context_instance=RequestContext(request))
 
-	
+    
 def schedules(request):
-	# Find first and last event
-	first = Meeting.objects.order_by('date')[0]
-	last = Meeting.objects.order_by('-date')[0]
-	
-	# Create the list of years and the presentations count
-	years_list = {}
-	for i in range(first.date.year, last.date.year + 1):
-		years_list["%d" % i] = Meeting.objects.filter(date__year=i).count()
-		
-	context = {
-		'years_list' : years_list,
-	}
-	
-	return render_to_response('wai/schedules.html', context, context_instance=RequestContext(request))
+    # Find first and last event
+    first = Meeting.objects.order_by('date')[0]
+    last = Meeting.objects.order_by('-date')[0]
+    
+    # Create the list of years and the presentations count
+    years_list = {}
+    for i in range(first.date.year, last.date.year + 1):
+        years_list["%d" % i] = Meeting.objects.filter(date__year=i).count()
+        
+    context = {
+        'years_list' : years_list,
+    }
+    
+    return render_to_response('wai/schedules.html', context, context_instance=RequestContext(request))
 
 def schedule_year(request, year):
-	meetings_list = Meeting.objects.filter(date__year=year).order_by('date')
-	for meeting in meetings_list:
-		if meeting.days_offset() >= 0:
-			meeting.nextMeeting = True
-			break
-	presenters = Presenter.objects.filter(available=True)
-	presenter_list = list()
-	for presenter in presenters:
-		last = presenter.last_presentation()
-		if last == 'None':
-			last = date(1970, 1, 1)
-		if last < date.today():
-			presenter_list.append({'presenter':presenter, 'date':last})
-		
-	context = {
-		'meetings_list' : meetings_list,
-		'reserve_list' : sorted(presenter_list, key=operator.itemgetter('date')),
-		'year' : year
-	}
-	
-	return render_to_response('wai/schedule_year.html', context, context_instance=RequestContext(request))
-	
+    meetings_list = Meeting.objects.filter(date__year=year).order_by('date')
+    for meeting in meetings_list:
+        if meeting.days_offset() >= 0:
+            meeting.nextMeeting = True
+            break
+    presenters = Presenter.objects.filter(available=True)
+    presenter_list = list()
+    for presenter in presenters:
+        last = presenter.last_presentation()
+        if last == 'None':
+            last = date(1970, 1, 1)
+        if last < date.today():
+            presenter_list.append({'presenter':presenter, 'date':last})
+        
+    context = {
+        'meetings_list' : meetings_list,
+        'reserve_list' : sorted(presenter_list, key=operator.itemgetter('date')),
+        'year' : year
+    }
+    
+    return render_to_response('wai/schedule_year.html', context, context_instance=RequestContext(request))
+    
 def schedule_ics(request):
-	meetings_list = Meeting.objects.order_by('date')
-	
-	tz = pytz.timezone('Europe/Amsterdam')
-	
-	cal = vobject.iCalendar()
-	cal.add('method').value = 'PUBLISH'  # IE/Outlook needs this
-	
-	for meeting in meetings_list:
-		
-		date = datetime(meeting.date.year, meeting.date.month, meeting.date.day, tzinfo=tz)
-		vevent = cal.add('vevent')
-		
-		# UID
-		vevent.add('uid').value = "WAI-%s@wai.few.vu.nl" % meeting.date
-		
-		# Begin and end
-		vevent.add('dtstart').value = date.replace(hour=11)
-		vevent.add('dtend').value = date.replace(hour=12)
-		
-		# Creation date
-		vevent.add('dtstamp').value = datetime.utcnow()
-		
-		# Title, location and description
-		vevent.add('summary').value = "WAI meeting : %s" % meeting.presenters()
-		vevent.add('location').value = meeting.location.name
-		text = ""
-		for p in meeting.presentation_set.all():
-			text += "%s : %s\n%s\n\n" % (p.presenter.name, p.title, p.abstract)
-		vevent.add('description').value = text
-		
-	icalstream = cal.serialize()
-	response = HttpResponse(icalstream, mimetype='text/calendar')
-	response['Filename'] = 'export.ics'  # IE needs this
-	response['Content-Disposition'] = 'attachment; filename=export.ics'
+    meetings_list = Meeting.objects.order_by('date')
+    
+    tz = pytz.timezone('Europe/Amsterdam')
+    
+    cal = vobject.iCalendar()
+    cal.add('method').value = 'PUBLISH'  # IE/Outlook needs this
+    
+    for meeting in meetings_list:
+        
+        date = datetime(meeting.date.year, meeting.date.month, meeting.date.day, tzinfo=tz)
+        vevent = cal.add('vevent')
+        
+        # UID
+        vevent.add('uid').value = "WAI-%s@wai.few.vu.nl" % meeting.date
+        
+        # Begin and end
+        vevent.add('dtstart').value = date.replace(hour=11)
+        vevent.add('dtend').value = date.replace(hour=12)
+        
+        # Creation date
+        vevent.add('dtstamp').value = datetime.utcnow()
+        
+        # Title, location and description
+        vevent.add('summary').value = "WAI meeting : %s" % meeting.presenters()
+        vevent.add('location').value = meeting.location.name
+        text = ""
+        for p in meeting.presentation_set.all():
+            text += "%s : %s\n%s\n\n" % (p.presenter.name, p.title, p.abstract)
+        vevent.add('description').value = text
+        
+    icalstream = cal.serialize()
+    response = HttpResponse(icalstream, mimetype='text/calendar')
+    response['Filename'] = 'export.ics'  # IE needs this
+    response['Content-Disposition'] = 'attachment; filename=export.ics'
 
-	return response
+    return response
 
 def raw_mails(request):
-	message = "";
-	for presenter in Presenter.objects.order_by('name'):
-		if presenter.available:
-			message += "\"" + presenter.name + "\" <" + presenter.email + ">, "
-	response = HttpResponse(message, mimetype='text/plain')
-	response['Filename'] = 'mails.txt'
-	response['Content-Disposition'] = 'attachment; filename=mails.txt'
-	return response
-	
+    message = "";
+    for presenter in Presenter.objects.order_by('name'):
+        if presenter.available:
+            message += "\"" + presenter.name + "\" <" + presenter.email + ">, "
+    response = HttpResponse(message, mimetype='text/plain')
+    response['Filename'] = 'mails.txt'
+    response['Content-Disposition'] = 'attachment; filename=mails.txt'
+    return response
+    
 def send_announce(request):
-	if request.method == 'POST': # If the form has been submitted...
-		form = SendAnnounceForm(request.POST) # A form bound to the POST data
-		if form.is_valid(): # All validation rules pass
-			# Process the data in form.cleaned_data
-			subject = form.cleaned_data['subject']
-			message = form.cleaned_data['message']
-			
-			from django.core.mail import send_mail
-			send_mail(subject, message, settings.EMAIL_SENDER, settings.EMAIL_ANOUNCEMENT_RECIPIENTS)
-			
-			return HttpResponseRedirect("/page/schedule") # Redirect after POST
-	else:
-		meeting = get_object_or_404(Meeting, date=request.GET['id'])
-		
-		subject = "WAI Monday (%s): %s (11:00 %s)" % (meeting.date.strftime("%d %B %Y"), meeting.presenters(), meeting.location.name)
+    from mailMessages import getAnnounceMessage, getAnnounceSubject
+    from mailHelper import mailWai
+    if request.method == 'POST': # If the form has been submitted...
+        form = SendAnnounceForm(request.POST) # A form bound to the POST data
+        if form.is_valid(): # All validation rules pass
+            mailWai(form.cleaned_data['subject'], form.cleaned_data['message'], settings.EMAIL_SENDER, settings.EMAIL_ANOUNCEMENT_RECIPIENTS, "", settings.EMAIL_REPLY_TO)
+            return HttpResponseRedirect("/page/schedule") # Redirect after POST
+    else:
+        meeting = get_object_or_404(Meeting, date=request.GET['id'])
+        
+        subject = getAnnounceSubject(meeting.date.strftime("%d %B %Y"), meeting.presenters(), meeting.location.name)
+        presenters = []
+        for pres in meeting.presentation_set.all():
+            presenter = {
+                'name': pres.presenter.name,
+                'title': pres.title,
+                'abstract': pres.abstract
+            }
+            presenters.append(presenter)
+        message = getAnnounceMessage(meeting.date.strftime("%d %B %Y"), meeting.location.name, presenters, settings.EMAIL_FOOTER)
+        default = {
+            'subject' : subject,
+            'message' : message
+        }
+        form = SendAnnounceForm(default, auto_id=False) # An unbound form
 
-		message = "Dear All, \n\nthe WAI presentations coming Monday (%s) will be held in room %s at 11:00.\n\n" % (meeting.date.strftime("%d %B %Y"), meeting.location.name)
-		
-		for pres in meeting.presentation_set.all():
-			message += "%s : %s\n%s\n\n" % (pres.presenter.name, pres.title, pres.abstract)
-		
-		message += "\n\n";
-		message += settings.EMAIL_FOOTER
-		
-		default = {
-			'subject' : subject,
-			'message' : message
-		}
-		form = SendAnnounceForm(default, auto_id=False) # An unbound form
+    return render_to_response('wai/send_announce.html', {'form': form}, context_instance=RequestContext(request))
 
-	return render_to_response('wai/send_announce.html', {'form': form}, context_instance=RequestContext(request))
-
-
-#subject, from_email, to = 'hello', 'from@example.com', 'to@example.com'
-#text_content = 'This is an important message.'
-#html_content = '<p>This is an <strong>important</strong> message.</p>'
-#msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
-#msg.attach_alternative(html_content, "text/html")
-#msg.send()
-	
-#render_to_string(template_name, dictionary=None)
 
 def send_request(request):
-	if request.method == 'POST': # If the form has been submitted...
-		form = SendRequestForm(request.POST) # A form bound to the POST data
-		if form.is_valid(): # All validation rules pass
-			# Process the data in form.cleaned_data
-			subject = form.cleaned_data['subject']
-			message = form.cleaned_data['message']
+    from mailMessages import getRequestMessage, getRequestSubject
+    from mailHelper import mailWai
+    if request.method == 'POST': # If the form has been submitted...
+        form = SendRequestForm(request.POST) # A form bound to the POST data
+        if form.is_valid():
+            meeting = get_object_or_404(Meeting, date=form.cleaned_data['identifier'])
+            cc = settings.EMAIL_REQUEST_ABSTRACT_CC
+            to = []
+            for pres in meeting.presentation_set.all():
+                to.append(pres.presenter.email)
+            mailWai(form.cleaned_data['subject'], form.cleaned_data['message'], settings.EMAIL_SENDER, to, cc, settings.EMAIL_REPLY_TO)
+            return HttpResponseRedirect("/page/schedule") # Redirect after POST
+    else:
+        meeting = get_object_or_404(Meeting, date=request.GET['id'])
+        subject = getRequestSubject()
+        
+        presenters = ""
+        for pres in meeting.presentation_set.all():
+            a = pres.presenter.name.split(' ')
+            presenters += "%s, " % a[0]
+        message = getRequestMessage(presenters, meeting.date.strftime("%d %B %Y"), settings.EMAIL_FOOTER)
+        default = {
+            'subject' : subject,
+            'message' : message,
+            'identifier' : request.GET['id']
+        }
+        form = SendRequestForm(default, auto_id=False) # An unbound form
 
-			meeting = get_object_or_404(Meeting, date=form.cleaned_data['identifier'])
-			recipients = settings.EMAIL_REQUEST_ABSTRACT_CC
-			for pres in meeting.presentation_set.all():
-				recipients.append(pres.presenter.email)
-				
-			from django.core.mail import send_mail
-			send_mail(subject, message, settings.EMAIL_SENDER, recipients)
-			
-			return HttpResponseRedirect("/page/schedule") # Redirect after POST
-	else:
-		meeting = get_object_or_404(Meeting, date=request.GET['id'])
-		
-		subject = "WAI - Presenter reminder"
-		
-		message = "Dear "
-		for pres in meeting.presentation_set.all():
-			a = pres.presenter.name.split(' ')
-			message += "%s, " % a[0]
-
-		message += "\n\n"
-			
-		message += "Your presentation is scheduled for %s at 11am.\n" % meeting.date.strftime("%d %B %Y")
-		message += "Please send us the title and the abstract of your talk as soon as possible, not later than coming Wednesday, so we can send the announcement to the list.\n"
-
-		message += "\n\n"
-
-		message += "Please note, that :\n"
-		message += "- In case of cancellation, go to http://wai.few.vu.nl and find someone from the top of the reserve list to fill your slot. Let us know when you have done so.\n"
-		message += "- In order to ease the interaction with the audience, you should announce the purpose of your talk before you start. Some examples :\n"
-		message += "* Rehearse a presentation for a conference,\n"
-		message += "* Ask for feedback on an on-going project,\n"
-		message += "* Discuss a new idea\n"
-		message += "* Have a general discussion\n"
-		message += "- In any case, the presentation must not be no longer than 30 minutes.\n"
-		message += "If you want to answer to some questions during the talk, be sure to manage your time accordingly.\n"
-		message += "We will chair the session and indicate the beginning of the last 5 minutes relative to the half an hour.\n"
-
-		message += "\n"
-
-		message += "It is also important to note that :\n"
-		message += "- A beamer will be available on the spot but you need to bring your own laptop. Please be present 5 minutes before starting, so we can get everything connected and tested.\n"
-		message += "- The time slot is fairly short. Please do not prepare too many slides (10-15 is probably about right depending on your style)\n"
-		message += "- The point of the WAI is to let your colleagues know what you're doing, not to give an in-depth lecture about certain algorithms or theories. Keep your presentation limited to things that are relevant to understand the main point of your talk, and accessible to the general AI public.\n"
-		message += "- The presenter is responsible to timing his/her presentation and for managing discussions. Feel free to cut people short if their questions are irrelevant or if you do not have time to answer them. It's your show, and we are only responsible for stopping it after 30 minutes.\n"
-		message += "\n"
-		message += settings.EMAIL_FOOTER
-		default = {
-			'subject' : subject,
-			'message' : message,
-			'identifier' : request.GET['id']
-		}
-		form = SendRequestForm(default, auto_id=False) # An unbound form
-
-	return render_to_response('wai/send_request.html', {'form': form}, context_instance=RequestContext(request))
-	
+    return render_to_response('wai/send_request.html', {'form': form}, context_instance=RequestContext(request))
+    

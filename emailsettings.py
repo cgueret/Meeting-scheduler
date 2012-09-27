@@ -1,9 +1,10 @@
 EMAIL_HOST="mails.vu.nl"
-EMAIL_HOST_USER="CHANGE_ME"
-EMAIL_HOST_PASSWORD="CHANGE_ME"
+EMAIL_HOST_USER="CHANGEME"
+EMAIL_HOST_PASSWORD="CHANGEME"
 EMAIL_PORT=587
 EMAIL_USE_TLS=True
 EMAIL_SENDER = "laurens.rietveld@vu.nl"
-EMAIL_ANOUNCEMENT_RECIPIENTS = ['wai-meetings@few.vu.nl', 'laurens.rietveld@vu.nl']
+EMAIL_REPLY_TO = "wai-organisation@few.vu.nl"
+EMAIL_ANOUNCEMENT_RECIPIENTS = ['wai-meetings@few.vu.nl', 'wai-organisation@few.vu.nl']
 EMAIL_REQUEST_ABSTRACT_CC = ['laurens.rietveld@vu.nl']
-EMAIL_FOOTER = "Best, Laurens and Chris"
+EMAIL_FOOTER = "Best, Laurens and Sara"

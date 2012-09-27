@@ -13,6 +13,24 @@
 {% block coltype %}flex{% endblock %}
 
 {% block content %}
+<h3>Subject</h3>
+{% autoescape off %}
+
+{% if form.instance.subject %}
+      {{form.instance.subject}}
+{% else %}
+      {{form.data.subject}}
+{% endif %}
+<h3>Message</h3>
+<div style="border:1px solid grey;margin: 5px;padding: 3px;">
+{% if form.instance.message %}
+      {{form.instance.message}}
+{% else %}
+      {{form.data.message}}
+{% endif %}
+</div>
+{% endautoescape %}
+
 <form action="/page/mailing/send_announce/" method="POST">
 	{{ form.as_p }}
 	<input type="submit" value="Submit" />
