@@ -1,10 +1,7 @@
-EMAIL_HOST="top.few.vu.nl"
-EMAIL_HOST_USER="CHANGEME"
-EMAIL_HOST_PASSWORD="CHANGEME"
+EMAIL_HOST="top.few.vu.nl" #this one does not need authentication
 EMAIL_PORT=25
 EMAIL_USE_TLS=False
 EMAIL_SENDER = "wai-organization@few.vu.nl"
-EMAIL_REPLY_TO = "wai-organization@few.vu.nl"
-EMAIL_ANOUNCEMENT_RECIPIENTS = ['wai-meetings@few.vu.nl', 'wai-organization@few.vu.nl']
+EMAIL_ANOUNCEMENT_RECIPIENTS = ['wai-meetings@few.vu.nl']
 EMAIL_REQUEST_ABSTRACT_CC = ['wai-organization@few.vu.nl']
 EMAIL_FOOTER = "Best, Laurens and Sara"

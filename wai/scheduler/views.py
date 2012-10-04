@@ -205,7 +205,7 @@ def send_announce(request):
     if request.method == 'POST': # If the form has been submitted...
         form = SendAnnounceForm(request.POST) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass
-            mailWai(form.cleaned_data['subject'], form.cleaned_data['message'], settings.EMAIL_SENDER, settings.EMAIL_ANOUNCEMENT_RECIPIENTS, "", settings.EMAIL_REPLY_TO)
+            mailWai(form.cleaned_data['subject'], form.cleaned_data['message'], settings.EMAIL_SENDER, settings.EMAIL_ANOUNCEMENT_RECIPIENTS)
             return HttpResponseRedirect("/page/schedule") # Redirect after POST
     else:
         meeting = get_object_or_404(Meeting, date=request.GET['id'])
@@ -240,7 +240,7 @@ def send_request(request):
             to = []
             for pres in meeting.presentation_set.all():
                 to.append(pres.presenter.email)
-            mailWai(form.cleaned_data['subject'], form.cleaned_data['message'], settings.EMAIL_SENDER, to, cc, settings.EMAIL_REPLY_TO)
+            mailWai(form.cleaned_data['subject'], form.cleaned_data['message'], settings.EMAIL_SENDER, to, cc)
             return HttpResponseRedirect("/page/schedule") # Redirect after POST
     else:
         meeting = get_object_or_404(Meeting, date=request.GET['id'])
