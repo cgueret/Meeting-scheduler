@@ -236,11 +236,11 @@ def send_request(request):
         form = SendRequestForm(request.POST) # A form bound to the POST data
         if form.is_valid():
             meeting = get_object_or_404(Meeting, date=form.cleaned_data['identifier'])
-            cc = settings.EMAIL_REQUEST_ABSTRACT_CC
-            to = []
+            #cc = settings.EMAIL_REQUEST_ABSTRACT_CC
+            to = [settings.EMAIL_REQUEST_ABSTRACT_CC]
             for pres in meeting.presentation_set.all():
                 to.append(pres.presenter.email)
-            mailWai(form.cleaned_data['subject'], form.cleaned_data['message'], settings.EMAIL_SENDER, to, cc)
+            mailWai(form.cleaned_data['subject'], form.cleaned_data['message'], settings.EMAIL_SENDER, to)
             return HttpResponseRedirect("/page/schedule") # Redirect after POST
     else:
         meeting = get_object_or_404(Meeting, date=request.GET['id'])
