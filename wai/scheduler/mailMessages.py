@@ -2,9 +2,9 @@ def getAnnounceMessage(date, location, presenters, footer):
     message = "Dear All, <br><br>"
     message += "The WAI presentations coming Monday (%s) will be held in <strong>room %s</strong> at 11:00.<br><br>\n\n" % (date, location)
     for presenter in presenters:
-        message += "<strong>%s</strong> : <i>%s</i>\n<br>%s\n\n<br><br>" % (presenter["name"], presenter["title"], presenter["abstract"])
+        message += "<strong>%s</strong>: <i>%s</i>\n<br>%s\n\n<br><br>" % (presenter["name"], presenter["title"], presenter["abstract"])
     
-    message += "\n\n<br><br>";
+    message += "\n\n<br>For the list of upcoming wai talks, visit the WAI site at <a href='http://wai.few.vu.nl' target='_blank'>http://wai.few.vu.nl</a>.<br>\n";
     message += footer
     return message
 
@@ -23,7 +23,7 @@ def getRequestMessage(presenters, date, footer):
     
     message += "Please note, that:\n"
     message += "<ul>"
-    message += "<li> In case of cancellation, go to http://wai.few.vu.nl and find someone from the top of the reserve list to fill your slot. Let us know when you have done so.</li>\n"
+    message += "<li> In case of cancellation, go to <a target='_blank' href='http://wai.few.vu.nl'>http://wai.few.vu.nl</a> and find someone from the top of the reserve list to fill your slot. Let us know when you have done so.</li>\n"
     message += "<li> In order to ease the interaction with the audience, you should announce the purpose of your talk before you start. Some examples :\n"
     message += "<ul>"
     message += "<li> Rehearse a presentation for a conference,</li>\n"
@@ -39,7 +39,7 @@ def getRequestMessage(presenters, date, footer):
     
     message += "<br>\n"
     
-    message += "It is also important to note that :\n"
+    message += "It is also important to note that:\n"
     message += "<ul>"
     message += "<li> A beamer will be available on the spot but you need to bring your own laptop. Please be present 5 minutes before starting, so we can get everything connected and tested.</li>\n"
     message += "<li> The time slot is fairly short. Please do not prepare too many slides (10-15 is probably about right depending on your style)</li>\n"
