@@ -6,12 +6,13 @@ TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
+	('WAI Organization', 'WAI-organization@few.vu.nl'),
 )
 
 MANAGERS = ADMINS
 
 DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = '/home/lrd900/code/meeting-scheduler/waibase.db'             # Or path to database file if using sqlite3.
+DATABASE_NAME = '/var/www/wai.few.vu.nl/waibase.db'             # Or path to database file if using sqlite3.
 DATABASE_USER = ''             # Not used with sqlite3.
 DATABASE_PASSWORD = ''         # Not used with sqlite3.
 DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
@@ -36,7 +37,7 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = '/home/lrd900/code/meeting-scheduler/media'
+MEDIA_ROOT = '/var/www/wai.few.vu.nl/media'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -49,7 +50,7 @@ MEDIA_URL = 'http://wai.few.vu.nl/media'
 ADMIN_MEDIA_PREFIX = '/media/'
 
 
-LOGGING_FILE="/home/lrd900/code/meeting-scheduler/djangoLog.log"
+LOGGING_FILE="/var/log/djangoLog.log"
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'c1+ccd$)v4pbg8gotcg=+kn_#j!ayzjr*1)u3%-jy@+fg1f5f%'
@@ -73,7 +74,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    "/home/lrd900/code/meeting-scheduler/wai/templates"
+    "/var/www/wai.few.vu.nl/wai/templates"
 )
 
 
