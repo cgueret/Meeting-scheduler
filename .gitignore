@@ -1,4 +1,6 @@
+media
 .project
 .pydevproject
 *.pyc
 wai/scheduler/*.pyc
+waibase.db
