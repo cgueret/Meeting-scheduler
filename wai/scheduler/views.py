@@ -154,14 +154,15 @@ def schedule_year(request, year):
 def schedule_ics(request):
     meetings_list = Meeting.objects.order_by('date')
     
-    tz = pytz.timezone('Europe/Amsterdam')
+    #tz = pytz.timezone('Europe/Amsterdam')
     
     cal = vobject.iCalendar()
     cal.add('method').value = 'PUBLISH'  # IE/Outlook needs this
     
     for meeting in meetings_list:
         
-        date = datetime(meeting.date.year, meeting.date.month, meeting.date.day, tzinfo=tz)
+        #date = datetime(meeting.date.year, meeting.date.month, meeting.date.day, tzinfo=tz)
+	date = datetime(meeting.date.year, meeting.date.month, meeting.date.day)
         vevent = cal.add('vevent')
         
         # UID
