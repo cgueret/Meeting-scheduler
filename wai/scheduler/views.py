@@ -8,8 +8,9 @@ from django.core.mail import EmailMultiAlternatives
 from django.utils.encoding import iri_to_uri
 from django.utils.http import urlquote_plus
 from django.conf import settings
-import pytz
+#import pytz
 import vobject
+from dateutil.tz import *
 import operator
 import logging
 
@@ -160,9 +161,10 @@ def schedule_ics(request):
     cal.add('method').value = 'PUBLISH'  # IE/Outlook needs this
     
     for meeting in meetings_list:
-        
+        #date = datetime(meeting.date.year, meeting.date.month, meeting.date.day, tzinfo=zoneinfo('Europe/Amsterdam'))
         #date = datetime(meeting.date.year, meeting.date.month, meeting.date.day, tzinfo=tz)
-	date = datetime(meeting.date.year, meeting.date.month, meeting.date.day)
+	#date = datetime(meeting.date.year, meeting.date.month, meeting.date.day)
+	date = datetime(meeting.date.year,meeting.date.month,meeting.date.day,0,0,0,0,gettz('Europe/Amsterdam'))
         vevent = cal.add('vevent')
         
         # UID
