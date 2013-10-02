@@ -17,7 +17,7 @@ def getRequestMessage(presenters, date, footer):
     message += "<br><br>"
         
     message += "Your presentation is scheduled for %s at 11am.\n" % date
-    message += "Please send us the title and the abstract of your talk as soon as possible, not later than coming Wednesday, so we can send the announcement to the list.\n"
+    message += "Please send us the title and the abstract of your talk as soon as possible, not later than the Wednesday before the presentation, so we can send the announcement to the list.\n"
     
     message += "<br><br>\n"
     
