@@ -17,6 +17,8 @@ class Group(models.Model):
 class Room(models.Model):
 	name = models.CharField(max_length=50)
 	note = models.CharField(max_length=100,blank=True)
+	class Meta:
+		ordering = ['name']
 	def __unicode__(self):
 		return self.name
 
